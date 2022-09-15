@@ -4,14 +4,19 @@ import datetime
 
 
 def get_data_bin(symbol,
-                 limit=1,
-                 interval='1h',
-                 last_date=datetime.datetime.now()):
+                 startTime: int,
+                 endTime: int,
+                 interval='1h'):
 
     url = 'https://fapi.binance.com/fapi/v1/klines'
 
     result = requests.get(
-        url, {'symbol': symbol, 'interval': interval, 'limit': limit})
+        url, {'symbol': symbol,
+              'interval': interval,
+              'startTime': startTime,
+              'endTime': endTime
+              }
+              )
 
     df = pd.DataFrame(columns=['datetime',
                                'open',
@@ -22,10 +27,13 @@ def get_data_bin(symbol,
                                'closed_candle',
                                'qty',
                                'vol',
-                               'insert_time'])
+                               'insert_time',
+                               'origin',
 
-    lticker, ldatetime, lopen, lhigh, llow, lclose, lclose_time, lclosed_candle, lqty, lvol, linsert_time = [
-        ], [], [], [], [], [], [], [], [], [], []
+                               ])
+
+    lticker, ldatetime, lopen, lhigh, llow, lclose, lclose_time, lclosed_candle, lqty, lvol, linsert_time, lorigin = [
+        ], [], [], [], [], [], [], [], [], [], [], []
 
     for candle in result.json():
         lticker.append(symbol)
@@ -39,6 +47,7 @@ def get_data_bin(symbol,
         lqty.append(float(candle[8]))
         linsert_time.append(datetime.datetime.now())
         lclosed_candle.append(True)
+        lorigin.append('API')
 
     df['ticker'] = lticker
     df['datetime'] = ldatetime
@@ -56,5 +65,10 @@ def get_data_bin(symbol,
 
     return df
 
+day = "2021-10-20"
+start_ts = datetime.datetime.strptime(day, '%Y-%m-%d').timestamp()
+end_ts = start_ts + 86399
 
-get_data_bin('BTCUSDT')
+
+
+get_data_bin('ETHUSDT', int(start_ts*1000), int(end_ts*1000))
