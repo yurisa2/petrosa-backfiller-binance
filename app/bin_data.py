@@ -1,6 +1,5 @@
 import requests
 import pandas as pd
-import datetime
 
 
 def get_data_bin(symbol,
