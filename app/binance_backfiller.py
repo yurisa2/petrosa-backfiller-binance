@@ -26,7 +26,10 @@ class BinanceBackfiller(object):
 
     def continuous_run(self):
         while True:
-            self.run()
+            try:
+                self.run()
+            except Exception as e:
+                print(e)
 
     def run(self):
         print('Starting backfiller', datetime.datetime.now())
