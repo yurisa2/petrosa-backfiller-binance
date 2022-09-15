@@ -16,10 +16,6 @@ sender = sender.PETROSASender('binance_socket_raw')
 backfiller = binance_backfiller.BinanceBackfiller(sender)
 
 threading.Thread(target=backfiller.continuous_run).start()
-threading.Thread(target=backfiller.continuous_run).start()
-threading.Thread(target=backfiller.continuous_run).start()
-threading.Thread(target=backfiller.continuous_run).start()
-threading.Thread(target=backfiller.continuous_run).start()
 
 
 @app.route("/")

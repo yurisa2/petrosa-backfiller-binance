@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import time
 
 
 def get_data_bin(symbol,
@@ -16,6 +17,11 @@ def get_data_bin(symbol,
               'endTime': endTime
               }
               )
+
+    if('code' in result.json()):
+        print('got an Error here',  result.json(), 'Will sleep 60s')
+
+        time.sleep(60)
 
     try:
         df = pd.DataFrame()
@@ -50,6 +56,8 @@ def get_data_bin(symbol,
     except Exception as e:
         print(e)
         print(result.json())
+        print('Will sleep for some time now')
+        time.sleep(10)
         raise
 
     return df
