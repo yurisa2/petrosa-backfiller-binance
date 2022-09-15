@@ -1,8 +1,8 @@
 import os
 from app import sender
-import threading
+from app import binance_backfiller
 from datetime import datetime
-import requests
+import threading
 
 
 from flask import Flask
@@ -11,15 +11,15 @@ app = Flask(__name__)
 
 start_datetime = datetime.utcnow()
 
-asset_list_raw = requests.get(
-    'https://fapi.binance.com/fapi/v1/ticker/price').json()
+sender = sender.PETROSASender('binance_socket_raw')
 
+backfiller = binance_backfiller.BinanceBackfiller(sender)
 
-asset_list_full = []
-for item in asset_list_raw:
-    if(item['symbol'][-4:] == 'USDT' or item['symbol'][-4:] == 'BUSD'):
-        # print(item)
-        asset_list_full.append(item)
+threading.Thread(target=backfiller.continuous_run).start()
+threading.Thread(target=backfiller.continuous_run).start()
+threading.Thread(target=backfiller.continuous_run).start()
+threading.Thread(target=backfiller.continuous_run).start()
+threading.Thread(target=backfiller.continuous_run).start()
 
 
 @app.route("/")
@@ -33,6 +33,7 @@ def queues():
     queues = {}
 
     queues['start_datetime'] = start_datetime
+    queues['total_sent'] = sender.total_sent
 
     return queues, 200
 

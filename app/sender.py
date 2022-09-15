@@ -1,15 +1,18 @@
 from kafka import KafkaProducer
 import json
 import time
+import os
 
 
 class PETROSASender(object):
     def __init__(self, topic):
-        self.producer = KafkaProducer(bootstrap_servers='localhost:9092')
+        self.producer = KafkaProducer(
+                bootstrap_servers=os.getenv('KAFKA_ADDRESS', 'localhost:9092')
+            )
         self.topic = topic
         self.total_sent = 0
 
-        self.producer.send(self.topic, b'HOLD THE LINE')
+        print('Kafka Brokers : ', os.getenv('KAFKA_ADDRESS', 'localhost:9092'))
         print('Started Sender for: ', self.topic)
 
     # Here we create a dual interface for list and for dict
