@@ -50,6 +50,9 @@ class BinanceBackfiller(object):
 
         self.send_it_forward(data, run_object['period'])
 
-        self.backfill_col.update_one(run_object, {'$set': {"state": 2}})
+        print('Finished backfiller for: ',
+              run_object['symbol'],
+              run_object['day'],
+              run_object['period'])
 
         return data
