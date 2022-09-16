@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 start_datetime = datetime.utcnow()
 
-sender = sender.PETROSASender('binance_socket_raw')
+sender = sender.PETROSASender('binance_backfill')
 
 backfiller = binance_backfiller.BinanceBackfiller(sender)
 
