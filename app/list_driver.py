@@ -15,9 +15,7 @@ start_date = datetime.date.today()
 
 number_of_days = 365
 date_list = []
-for day in range(number_of_days):
-    a_date = (start_date - datetime.timedelta(days=day)).isoformat()
-    date_list.append(a_date)
+date_list.append('2022-07-15')
 
 
 item_list = []

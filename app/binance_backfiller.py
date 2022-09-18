@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import os
 from app import bin_data
 import datetime
+import time
 
 
 class BinanceBackfiller(object):
@@ -30,11 +31,17 @@ class BinanceBackfiller(object):
                 self.run()
             except Exception as e:
                 print(e)
+                raise
 
     def run(self):
         print('Starting backfiller', datetime.datetime.now())
 
         run_object = self.backfill_col.find_one({"state": 0})
+
+        if not run_object:
+            print('Nothing to backfill, KUDOS!')
+            time.sleep(600)
+
         self.backfill_col.update_one(run_object, {'$set': {"state": 1}})
 
         day = run_object['day']
