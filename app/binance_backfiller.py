@@ -41,6 +41,7 @@ class BinanceBackfiller(object):
         if not run_object:
             print('Nothing to backfill, KUDOS!')
             time.sleep(600)
+            return False
 
         self.backfill_col.update_one(run_object, {'$set': {"state": 1}})
 
