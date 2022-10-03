@@ -27,7 +27,7 @@ spec:
           - name: KAFKA_ADDRESS
             valueFrom:
               secretKeyRef:
-                name: petrosa-socket-binance
+                name: petrosa-apps-secret
                 key: KAFKA_ADDRESS
                 optional: false
           - name: MONGO_URI
