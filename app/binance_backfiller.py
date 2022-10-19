@@ -31,7 +31,8 @@ class BinanceBackfiller(object):
                 self.run()
             except Exception as e:
                 print(e)
-                raise
+                print('see If i started again')
+                # raise
 
     def run(self):
         print('Starting backfiller', datetime.datetime.now())

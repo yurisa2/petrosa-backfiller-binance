@@ -2,7 +2,7 @@ import requests
 import datetime
 from pymongo import MongoClient
 
-client = MongoClient('mongodb://root:wUx3uQRBC8@localhost:27017/')
+client = MongoClient('mongodb://root:QnjfRW7nl6@localhost:27017/')
 
 asset_list_raw = requests.get(
     'https://fapi.binance.com/fapi/v1/ticker/price').json()
@@ -15,7 +15,9 @@ start_date = datetime.date.today()
 
 number_of_days = 365
 date_list = []
-date_list.append('2022-07-15')
+for day in range(number_of_days):
+    a_date = (start_date - datetime.timedelta(days=day)).isoformat()
+    date_list.append(a_date)
 
 
 item_list = []
@@ -27,6 +29,7 @@ for symbol in asset_list_raw:
             item['day'] = day
             item['period'] = period
             item['state'] = 0
+            item['checked'] = False
             item_list.append(item)
 
 len(item_list)
