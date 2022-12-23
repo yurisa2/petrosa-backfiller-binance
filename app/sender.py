@@ -16,7 +16,7 @@ class PETROSASender(object):
 
         logging.warning('Kafka Brokers : ' + os.getenv('KAFKA_ADDRESS', 'localhost:9092'))
         logging.warning('Started Sender for: ' +  self.topic)
-        self.start_time = time()
+        self.start_time = time.time()
 
     # Here we create a dual interface for list and for dict
     # Some subscriptions responds different than others, using lists or dicts
