@@ -22,6 +22,8 @@ class BinanceBackfiller(object):
             prep_row = {}
             prep_row['k'] = row
             prep_row['k']['i'] = period
+            prep_row['k']['origin'] = 'backfiller'
+            prep_row['k']['petrosa_timestamp'] = datetime.datetime.now().isoformat()
 
             self.sender.send(prep_row)
 
