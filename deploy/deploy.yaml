@@ -19,11 +19,9 @@ spec:
       - name: petrosa-backfiller-binance
         image: yurisa2/petrosa-backfiller-binance:latest
         imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
         env:
           - name: VERSION
-            value: "0.0.14"
+            value: "0.0.15"
           - name: KAFKA_ADDRESS
             valueFrom:
               secretKeyRef:

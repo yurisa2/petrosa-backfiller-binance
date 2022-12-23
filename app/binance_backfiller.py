@@ -4,7 +4,6 @@ from app import bin_data
 import datetime
 import time
 import logging
-import sys
 
 class BinanceBackfiller(object):
 
@@ -35,7 +34,7 @@ class BinanceBackfiller(object):
             except Exception as e:
                 logging.error(e)
                 logging.warning('see If i started again')
-                sys.exit()
+                raise
 
     def run(self):
         logging.warning('Starting backfiller')

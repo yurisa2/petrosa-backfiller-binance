@@ -36,6 +36,10 @@ class PETROSASender(object):
 
             self.producer.send(self.topic, msg)
             self.total_sent += 1
+            
+            if(self.total_sent % 1000):
+                logging.warning("another 1000 sent")
+                
         except Exception as e:
             logging.error(e)
             sys.exit()
