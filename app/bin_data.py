@@ -3,8 +3,10 @@ import pandas as pd
 import time
 import logging
 import sys
+import newrelic.agent
 
 
+@newrelic.agent.background_task()
 def get_data_bin(symbol,
                  startTime: int,
                  endTime: int,

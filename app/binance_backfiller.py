@@ -38,6 +38,8 @@ class BinanceBackfiller(object):
                 logging.warning('see If i started again')
                 raise
 
+
+    @newrelic.agent.background_task()
     def run(self):
 
         run_object = self.backfill_col.find_one({"state": 0})

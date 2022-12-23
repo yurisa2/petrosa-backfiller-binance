@@ -4,6 +4,7 @@ import time
 import os
 import logging
 import sys
+import newrelic.agent
 
 
 class PETROSASender(object):
@@ -22,6 +23,8 @@ class PETROSASender(object):
     # Here we create a dual interface for list and for dict
     # Some subscriptions responds different than others, using lists or dicts
 
+
+    @newrelic.agent.background_task()
     def to_send(self, msg):
         if(type(msg) is list):
             for _msg in msg:
@@ -29,6 +32,8 @@ class PETROSASender(object):
         else:
             self.send(msg)
 
+
+    @newrelic.agent.background_task()
     def send(self, msg):
         try:
             msg['petrosa_timestamp'] = time.time()
