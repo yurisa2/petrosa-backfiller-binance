@@ -2,6 +2,8 @@ from kafka import KafkaProducer
 import json
 import time
 import os
+import logging
+import sys
 
 
 class PETROSASender(object):
@@ -12,8 +14,8 @@ class PETROSASender(object):
         self.topic = topic
         self.total_sent = 0
 
-        print('Kafka Brokers : ', os.getenv('KAFKA_ADDRESS', 'localhost:9092'))
-        print('Started Sender for: ', self.topic)
+        logging.warning('Kafka Brokers : ' + os.getenv('KAFKA_ADDRESS', 'localhost:9092'))
+        logging.warning('Started Sender for: ' +  self.topic)
 
     # Here we create a dual interface for list and for dict
     # Some subscriptions responds different than others, using lists or dicts
@@ -35,7 +37,5 @@ class PETROSASender(object):
             self.producer.send(self.topic, msg)
             self.total_sent += 1
         except Exception as e:
-            print(e)
-            print(type(msg))
-            print(msg)
-            # raise #DEBUG
+            logging.error(e)
+            sys.exit()

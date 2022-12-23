@@ -3,7 +3,8 @@ import os
 from app import bin_data
 import datetime
 import time
-
+import logging
+import sys
 
 class BinanceBackfiller(object):
 
@@ -32,17 +33,17 @@ class BinanceBackfiller(object):
             try:
                 self.run()
             except Exception as e:
-                print(e)
-                print('see If i started again')
-                # raise
+                logging.error(e)
+                logging.warning('see If i started again')
+                sys.exit()
 
     def run(self):
-        print('Starting backfiller', datetime.datetime.now())
+        logging.warning('Starting backfiller', datetime.datetime.now())
 
         run_object = self.backfill_col.find_one({"state": 0})
 
         if not run_object:
-            print('Nothing to backfill, KUDOS!')
+            logging.info('Nothing to backfill, KUDOS!')
             time.sleep(600)
             return False
 
@@ -61,9 +62,9 @@ class BinanceBackfiller(object):
 
         self.send_it_forward(data, run_object['period'])
 
-        print('Finished backfiller for: ',
-              run_object['symbol'],
-              run_object['day'],
-              run_object['period'])
+        # logging.info('Finished backfiller for: ',
+        #       run_object['symbol'],
+        #       run_object['day'],
+        #       run_object['period'])
 
         return data

@@ -1,6 +1,8 @@
 import requests
 import pandas as pd
 import time
+import logging
+import sys
 
 
 def get_data_bin(symbol,
@@ -19,7 +21,7 @@ def get_data_bin(symbol,
               )
 
     if('code' in result.json()):
-        print('got an Error here',  result.json(), 'Will sleep 60s')
+        logging.error('got an Error here',  result.json(), 'Will sleep 60s')
 
         time.sleep(60)
 
@@ -54,10 +56,7 @@ def get_data_bin(symbol,
 
         # df = df.set_index('datetime')
     except Exception as e:
-        print(e)
-        print(result.json())
-        print('Will sleep for some time now')
-        time.sleep(10)
-        raise
+        logging.error(e)
+        sys.exit()
 
     return df

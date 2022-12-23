@@ -23,7 +23,7 @@ spec:
         - containerPort: 8080
         env:
           - name: VERSION
-            value: "0.0.12"
+            value: "0.0.13"
           - name: KAFKA_ADDRESS
             valueFrom:
               secretKeyRef:
@@ -35,4 +35,10 @@ spec:
               secretKeyRef:
                 name: petrosa-apps-secret
                 key: MONGO_URI
+                optional: false
+          - name: NEW_RELIC_LICENSE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: petrosa-apps-secret
+                key: NEW_RELIC_LICENSE_KEY
                 optional: false
