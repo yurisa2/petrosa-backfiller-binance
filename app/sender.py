@@ -16,6 +16,7 @@ class PETROSASender(object):
 
         logging.warning('Kafka Brokers : ' + os.getenv('KAFKA_ADDRESS', 'localhost:9092'))
         logging.warning('Started Sender for: ' +  self.topic)
+        self.start_time = time()
 
     # Here we create a dual interface for list and for dict
     # Some subscriptions responds different than others, using lists or dicts
@@ -37,8 +38,8 @@ class PETROSASender(object):
             self.producer.send(self.topic, msg)
             self.total_sent += 1
             
-            if(self.total_sent % 1000):
-                logging.warning("another 1000 sent")
+            if(time.time() - self.start_time > 60):
+                logging.warning(str(self.total_sent) + " sent since start")
                 
         except Exception as e:
             logging.error(e)

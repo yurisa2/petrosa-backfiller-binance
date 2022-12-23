@@ -14,6 +14,8 @@ class BinanceBackfiller(object):
 
         self.backfill_col = self.client.petrosa_crypto['backfill']
         self.sender = sender
+        logging.warning('Starting backfiller')
+
 
     def send_it_forward(self, df, period):
         send_list = df.to_dict('records')
@@ -37,12 +39,11 @@ class BinanceBackfiller(object):
                 raise
 
     def run(self):
-        logging.warning('Starting backfiller')
 
         run_object = self.backfill_col.find_one({"state": 0})
 
         if not run_object:
-            logging.info('Nothing to backfill, KUDOS!')
+            logging.warning('Nothing to backfill, KUDOS!')
             time.sleep(600)
             return False
 
