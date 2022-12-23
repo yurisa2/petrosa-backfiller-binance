@@ -38,7 +38,7 @@ class BinanceBackfiller(object):
                 sys.exit()
 
     def run(self):
-        logging.warning('Starting backfiller', datetime.datetime.now())
+        logging.warning('Starting backfiller')
 
         run_object = self.backfill_col.find_one({"state": 0})
 
