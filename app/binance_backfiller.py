@@ -19,6 +19,7 @@ class BinanceBackfiller(object):
         logging.warning('Starting backfiller')
 
 
+    @newrelic.agent.background_task()
     def send_it_forward(self, df, period):
         send_list = df.to_dict('records')
 
@@ -31,6 +32,8 @@ class BinanceBackfiller(object):
 
             self.sender.send(prep_row)
 
+
+    @newrelic.agent.background_task()
     def continuous_run(self):
         while True:
             try:
