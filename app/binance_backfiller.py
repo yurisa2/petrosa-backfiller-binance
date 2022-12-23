@@ -4,6 +4,8 @@ from app import bin_data
 import datetime
 import time
 import logging
+import newrelic.agent
+
 
 class BinanceBackfiller(object):
 
