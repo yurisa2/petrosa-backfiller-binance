@@ -44,9 +44,9 @@ class PETROSASender(object):
             self.producer.send(self.topic, msg)
             self.total_sent += 1
             
-            if (time.time() - self.last_time_shown > 60):
-                logging.warning(str(self.total_sent) + " sent since start")
-                self.last_time_shown = time.time()
+            # if (time.time() - self.last_time_shown > 60):
+            #     logging.warning(str(self.total_sent) + " sent since start")
+            #     self.last_time_shown = time.time()
                 
         except Exception as e:
             logging.error(e)
