@@ -35,12 +35,7 @@ class BinanceBackfiller(object):
 
     def continuous_run(self):
         while True:
-            try:
-                self.run()
-            except Exception as e:
-                logging.error(e)
-                logging.warning('see If i started again')
-                raise
+            self.run()
 
 
     @newrelic.agent.background_task()
@@ -50,7 +45,7 @@ class BinanceBackfiller(object):
 
         if not run_object:
             logging.warning('Nothing to backfill, KUDOS!')
-            time.sleep(600)
+            time.sleep(60)
             return False
 
         self.backfill_col.update_one(run_object, {'$set': {"state": 1}})
@@ -60,10 +55,10 @@ class BinanceBackfiller(object):
         end_ts = start_ts + 86399
 
         data = bin_data.get_data_bin(
-            run_object['symbol'],
-            int(start_ts*1000),
-            int(end_ts*1000),
-            run_object['period']
+            symbol=run_object['symbol'],
+            startTime=int(start_ts*1000),
+            endTime=int(end_ts*1000),
+            endTime=run_object['period']
             )
 
         self.send_it_forward(data, run_object['period'])
