@@ -44,7 +44,10 @@ class BinanceBackfiller(object):
         run_object = self.backfill_col.find({"state": 0}).sort("checking_times", 1).limit(1)
 
         run_object = list(run_object)
-        run_object = run_object[0]
+        if(len(run_object) > 0):
+            run_object = run_object[0]
+        else:
+            run_object = None
 
         if not run_object:
             logging.warning('Nothing to backfill, KUDOS!')
