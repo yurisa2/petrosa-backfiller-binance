@@ -41,7 +41,10 @@ class BinanceBackfiller(object):
     @newrelic.agent.background_task()
     def run(self):
 
-        run_object = self.backfill_col.find_one({"state": 0}).sort("checking_times", 1)
+        run_object = self.backfill_col.find({"state": 0}).sort("checking_times", 1).limit(1)
+
+        run_object = list(run_object)
+        run_object = run_object[0]
 
         if not run_object:
             logging.warning('Nothing to backfill, KUDOS!')
@@ -63,9 +66,9 @@ class BinanceBackfiller(object):
 
         self.send_it_forward(data, run_object['period'])
 
-        # logging.info('Finished backfiller for: ',
-        #       run_object['symbol'],
-        #       run_object['day'],
-        #       run_object['period'])
+        print('Finished backfiller for: ',
+              run_object['symbol'],
+              run_object['day'],
+              run_object['period'])
 
         return data
