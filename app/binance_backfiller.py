@@ -41,12 +41,12 @@ class BinanceBackfiller(object):
     @newrelic.agent.background_task()
     def run(self):
 
-        run_object = self.backfill_col.find_one({"state": 0})
+        run_object = self.backfill_col.find_one({"state": 0}).sort("checking_times", 1)
 
         if not run_object:
             logging.warning('Nothing to backfill, KUDOS!')
             time.sleep(60)
-            return False
+            return True
 
         self.backfill_col.update_one(run_object, {'$set': {"state": 1}})
 
