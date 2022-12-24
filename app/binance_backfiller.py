@@ -66,9 +66,9 @@ class BinanceBackfiller(object):
 
         self.send_it_forward(data, run_object['period'])
 
-        print('Finished backfiller for: ',
-              run_object['symbol'],
-              run_object['day'],
-              run_object['period'])
+        # print('Finished backfiller for: ',
+        #       run_object['symbol'],
+        #       run_object['day'],
+        #       run_object['period'])
 
         return data
