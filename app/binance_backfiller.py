@@ -58,7 +58,7 @@ class BinanceBackfiller(object):
             symbol=run_object['symbol'],
             startTime=int(start_ts*1000),
             endTime=int(end_ts*1000),
-            endTime=run_object['period']
+            interval=run_object['period']
             )
 
         self.send_it_forward(data, run_object['period'])
