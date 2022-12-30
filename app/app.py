@@ -8,4 +8,4 @@ sender = sender.PETROSASender('binance_backfill')
 backfiller = binance_backfiller.BinanceBackfiller(sender)
 
 while True:
-    binance_backfiller.run()
+    backfiller.run()
