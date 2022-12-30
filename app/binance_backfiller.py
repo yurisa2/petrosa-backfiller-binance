@@ -32,12 +32,6 @@ class BinanceBackfiller(object):
 
             self.sender.send(prep_row)
 
-
-    def continuous_run(self):
-        while True:
-            self.run()
-
-
     @newrelic.agent.background_task()
     def run(self):
 

@@ -4,6 +4,7 @@ import time
 import os
 import logging
 import newrelic.agent
+import sys
 
 
 class PETROSASender(object):
@@ -33,16 +34,17 @@ class PETROSASender(object):
 
 
     @newrelic.agent.background_task()
-    def send(self, msg):
-        msg['petrosa_timestamp'] = time.time()
+    def send(self, msg) -> None:
+        try:
+            
+            msg['petrosa_timestamp'] = time.time()
 
-        msg = json.dumps(msg)
-        msg = bytes(msg, encoding='utf8')
+            msg = json.dumps(msg)
+            msg = bytes(msg, encoding='utf8')
 
-        self.producer.send(self.topic, msg)
-        self.total_sent += 1
-        
-        # if (time.time() - self.last_time_shown > 60):
-        #     logging.warning(str(self.total_sent) + " sent since start")
-        #     self.last_time_shown = time.time()
+            self.producer.send(self.topic, msg)
+            self.total_sent += 1
+        except Exception as e:
+            logging.error(e)
+            sys.exit(1)
             
