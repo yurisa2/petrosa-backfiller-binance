@@ -29,7 +29,7 @@ class BinanceBackfiller(object):
             prep_row['k'] = row
             prep_row['k']['i'] = period
             prep_row['k']['origin'] = origin
-            prep_row['k']['petrosa_timestamp'] = datetime.datetime.now().isoformat()
+            prep_row['k']['petrosa_timestamp'] = datetime.datetime.utcnow().isoformat()
 
             self.sender.send(prep_row)
 
