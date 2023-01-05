@@ -10,7 +10,7 @@ start_datetime = datetime.utcnow()
 sender = sender.PETROSASender('binance_backfill')
 msg_queue = queue.Queue()
 
-rec = receiver.PETROSAReceiver("intraday_backfilling", msg_queue)
+rec = receiver.PETROSAReceiver("binance_intraday_backfilling", msg_queue)
 
 backfiller = binance_backfiller.BinanceBackfiller(sender, msg_queue)
 
