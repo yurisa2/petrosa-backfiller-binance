@@ -1,9 +1,12 @@
-from kafka import KafkaConsumer
-import os
 import json
-import threading
-import newrelic.agent
 import logging
+import os
+import sys
+import threading
+
+import newrelic.agent
+from kafka import KafkaConsumer
+
 
 class PETROSAReceiver(object):
     def __init__(self,
@@ -19,7 +22,7 @@ class PETROSAReceiver(object):
             self.msg_queue = msg_queue
         except:
             print('Error in Kafka Consumer')
-            os._exit(1)
+            sys.exit(1)
 
         threading.Thread(target=self.run).start()
 
@@ -40,7 +43,7 @@ class PETROSAReceiver(object):
         except Exception as e:
             logging.error(e)
             logging.error('Error in Kafka Consumer')
-            os._exit(1)
+            sys.exit(1)
         
 
         return True

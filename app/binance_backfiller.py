@@ -1,10 +1,12 @@
-from pymongo import MongoClient
-import os
-from app import bin_data
 import datetime
-import time
 import logging
+import os
+import time
+
 import newrelic.agent
+from pymongo import MongoClient
+
+from app import bin_data
 
 
 class BinanceBackfiller(object):

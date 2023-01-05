@@ -1,10 +1,11 @@
-from kafka import KafkaProducer
 import json
-import time
-import os
 import logging
-import newrelic.agent
+import os
 import sys
+import time
+
+import newrelic.agent
+from kafka import KafkaProducer
 
 
 class PETROSASender(object):

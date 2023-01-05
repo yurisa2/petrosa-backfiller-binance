@@ -1,10 +1,7 @@
-from app import sender
-from app import binance_backfiller
-from datetime import datetime
 import queue
-from app import receiver 
+from datetime import datetime
 
-
+from app import binance_backfiller, receiver, sender
 
 start_datetime = datetime.utcnow()
 sender = sender.PETROSASender('binance_backfill')

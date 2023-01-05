@@ -1,8 +1,9 @@
-import requests
-import pandas as pd
-import time
 import logging
+import time
+
 import newrelic.agent
+import pandas as pd
+import requests
 
 
 @newrelic.agent.background_task()
