@@ -10,12 +10,12 @@ import sys
 class PETROSASender(object):
     def __init__(self, topic):
         self.producer = KafkaProducer(
-                bootstrap_servers=os.getenv('KAFKA_ADDRESS', 'localhost:9092')
+                bootstrap_servers=os.getenv('KAFKA_ADDRESS', 'localhost:9093')
             )
         self.topic = topic
         self.total_sent = 0
 
-        logging.warning('Kafka Brokers : ' + os.getenv('KAFKA_ADDRESS', 'localhost:9092'))
+        logging.warning('Kafka Brokers : ' + os.getenv('KAFKA_ADDRESS', 'localhost:9093'))
         logging.warning('Started Sender for: ' +  self.topic)
         self.start_time = time.time()
         self.last_time_shown = 0

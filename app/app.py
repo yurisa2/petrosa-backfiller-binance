@@ -1,11 +1,19 @@
 from app import sender
 from app import binance_backfiller
 from datetime import datetime
+import queue
+from app import receiver 
+
+
 
 start_datetime = datetime.utcnow()
 sender = sender.PETROSASender('binance_backfill')
+msg_queue = queue.Queue()
 
-backfiller = binance_backfiller.BinanceBackfiller(sender)
+rec = receiver.PETROSAReceiver("intraday_backfilling", msg_queue)
+
+backfiller = binance_backfiller.BinanceBackfiller(sender, msg_queue)
 
 while True:
-    backfiller.run()
+    backfiller.run_from_db()
+    backfiller.run_from_intraday()
