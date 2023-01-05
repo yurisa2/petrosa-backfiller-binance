@@ -21,12 +21,18 @@ spec:
         imagePullPolicy: Always
         env:
           - name: VERSION
-            value: "0.0.35"
+            value: "0.0.36"
           - name: KAFKA_ADDRESS
             valueFrom:
               secretKeyRef:
                 name: petrosa-apps-secret
                 key: KAFKA_ADDRESS
+                optional: false
+          - name: KAFKA_SUBSCRIBER
+            valueFrom:
+              secretKeyRef:
+                name: petrosa-apps-secret
+                key: KAFKA_SUBSCRIBER
                 optional: false
           - name: MONGO_URI
             valueFrom:
