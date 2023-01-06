@@ -16,7 +16,15 @@ def get_data_bin(symbol: str,
 
     if startTime > endTime:
         return None
-        
+
+    if (startTime == endTime):
+        logging.warning('Will fix by getting back the startTime')
+        if(interval == '5m'):
+            startTime = startTime - 300000
+        elif(interval == '15m'):
+            startTime = startTime - 900000
+        elif(interval == '1h'):
+            startTime = startTime - 3600000
 
     result = requests.get(
         url, {'symbol': symbol,
