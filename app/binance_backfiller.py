@@ -64,7 +64,7 @@ class BinanceBackfiller(object):
                                 msg['period'],
                                 'backfiller_intraday')
             except Exception as e:
-                logging.error(e)
+                pass
             
 
 
