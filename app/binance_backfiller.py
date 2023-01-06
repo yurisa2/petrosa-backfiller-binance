@@ -2,7 +2,6 @@ import datetime
 import logging
 import os
 import time
-import sys
 
 import newrelic.agent
 from pymongo import MongoClient
@@ -57,49 +56,40 @@ class BinanceBackfiller(object):
     @newrelic.agent.background_task()
     def run_from_intraday(self):
         for _ in (range(10)):
-            try:
-                msg = self.msg_queue.get_nowait()
-                self.manage_data(msg['ticker'], 
-                                int(msg['min']), 
-                                int(msg['max']), 
-                                msg['period'],
-                                'backfiller_intraday')
-            
-            except Exception as e:
-                logging.error(e)
-                sys.exit(1)
+            msg = self.msg_queue.get_nowait()
+            self.manage_data(msg['ticker'], 
+                            int(msg['min']), 
+                            int(msg['max']), 
+                            msg['period'],
+                            'backfiller_intraday')
             
 
 
     @newrelic.agent.background_task()
     def run_from_db(self):
-        try:
-            run_object = self.backfill_col.find({"state": 0}).sort("checking_times", 1).limit(1)
+        run_object = self.backfill_col.find({"state": 0}).sort("checking_times", 1).limit(1)
 
-            run_object = list(run_object)
-            if(len(run_object) > 0):
-                run_object = run_object[0]
-            else:
-                run_object = None
+        run_object = list(run_object)
+        if(len(run_object) > 0):
+            run_object = run_object[0]
+        else:
+            run_object = None
 
-            if not run_object:
-                logging.warning('Nothing to backfill, KUDOS!')
-                time.sleep(60)
-                return True
+        if not run_object:
+            logging.warning('Nothing to backfill, KUDOS!')
+            time.sleep(60)
+            return True
 
-            self.backfill_col.update_one(run_object, {'$set': {"state": 1}})
+        self.backfill_col.update_one(run_object, {'$set': {"state": 1}})
 
-            day = run_object['day']
-            start_ts = datetime.datetime.strptime(day, '%Y-%m-%d').timestamp()
-            end_ts = start_ts + 86399
-            
-            self.manage_data(run_object['symbol'], 
-                            int(start_ts), 
-                            int(end_ts), 
-                            run_object['period'],
-                            'backfiller')
-        except Exception as e:
-            logging.error(e)
-            sys.exit(1)
+        day = run_object['day']
+        start_ts = datetime.datetime.strptime(day, '%Y-%m-%d').timestamp()
+        end_ts = start_ts + 86399
+        
+        self.manage_data(run_object['symbol'], 
+                        int(start_ts), 
+                        int(end_ts), 
+                        run_object['period'],
+                        'backfiller')
 
         return True
