@@ -21,13 +21,12 @@ class PETROSAReceiver(object):
                                 )
             self.msg_queue = msg_queue
         except:
-            print('Error in Kafka Consumer')
+            logging.error('Error in Kafka Consumer')
             sys.exit(1)
 
         threading.Thread(target=self.run).start()
 
-        print('Started receiver on topic ', topic)
-
+        logging.warning('Started receiver on topic ', topic)
 
 
     @newrelic.agent.background_task()
