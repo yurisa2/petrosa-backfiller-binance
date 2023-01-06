@@ -22,7 +22,7 @@ class PETROSAReceiver(object):
         self.receiver = threading.Thread(target=self.run)
         self.receiver.start()
 
-        logging.warning('Started receiver on topic ', topic)
+        logging.warning('Started receiver on topic ' + topic)
 
 
     @newrelic.agent.background_task()
