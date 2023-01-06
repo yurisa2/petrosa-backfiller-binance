@@ -15,7 +15,7 @@ def get_data_bin(symbol: str,
     url = 'https://fapi.binance.com/fapi/v1/klines'
 
     if startTime > endTime:
-        return False
+        return None
         
 
     result = requests.get(

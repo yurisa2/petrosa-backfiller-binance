@@ -49,7 +49,7 @@ class BinanceBackfiller(object):
             interval=interval
             )
 
-        if data:
+        if data is not None:
             self.send_it_forward(data, interval, origin)
         return True
     
