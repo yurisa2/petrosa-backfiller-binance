@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: VERSION
-            value: "0.0.42"
+            value: "0.0.43"
           - name: KAFKA_ADDRESS
             valueFrom:
               secretKeyRef:

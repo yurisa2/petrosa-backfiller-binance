@@ -29,7 +29,8 @@ def get_data_bin(symbol: str,
     if('code' in result.json()):
         logging.error('got an Error here',  result.json(), 'Will sleep 5s')
         time.sleep(5)
-        return False
+        logging.warning('waking up')
+        return None
 
     df = pd.DataFrame()
 
