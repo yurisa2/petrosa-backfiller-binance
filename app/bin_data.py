@@ -14,6 +14,10 @@ def get_data_bin(symbol: str,
 
     url = 'https://fapi.binance.com/fapi/v1/klines'
 
+    if endTime > startTime:
+        return False
+        
+
     result = requests.get(
         url, {'symbol': symbol,
               'interval': interval,
@@ -23,9 +27,9 @@ def get_data_bin(symbol: str,
               )
 
     if('code' in result.json()):
-        logging.error('got an Error here',  result.json(), 'Will sleep 60s')
-
-        time.sleep(60)
+        logging.error('got an Error here',  result.json(), 'Will sleep 5s')
+        time.sleep(5)
+        return False
 
     df = pd.DataFrame()
 

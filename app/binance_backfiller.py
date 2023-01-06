@@ -49,7 +49,8 @@ class BinanceBackfiller(object):
             interval=interval
             )
 
-        self.send_it_forward(data, interval, origin)
+        if data:
+            self.send_it_forward(data, interval, origin)
         return True
     
     @newrelic.agent.background_task()
