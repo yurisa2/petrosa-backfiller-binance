@@ -56,16 +56,13 @@ class BinanceBackfiller(object):
     @newrelic.agent.background_task()
     def run_from_intraday(self):
         for _ in (range(10)):
-            try:
+            if self.msg_queue.empty() is False:
                 msg = self.msg_queue.get_nowait()
                 self.manage_data(msg['ticker'], 
                                 int(msg['min']), 
                                 int(msg['max']), 
                                 msg['period'],
                                 'backfiller_intraday')
-            except Exception as e:
-                pass
-            
 
 
     @newrelic.agent.background_task()

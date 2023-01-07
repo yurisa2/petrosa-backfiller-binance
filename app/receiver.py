@@ -19,7 +19,7 @@ class PETROSAReceiver(object):
                             )
         self.msg_queue = msg_queue
 
-        self.receiver = threading.Thread(target=self.run)
+        self.receiver = threading.Thread(target=self.run, daemon=True)
         self.receiver.start()
 
         logging.warning('Started receiver on topic ' + topic)
@@ -34,6 +34,4 @@ class PETROSAReceiver(object):
             msg = json.loads(msg)
             self.msg_queue.put(msg)
                 
-        self.receiver.join()
-
         return True
